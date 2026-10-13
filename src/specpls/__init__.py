@@ -7,7 +7,7 @@ spectroscopic PAT data.
 
 from importlib.metadata import PackageNotFoundError, version
 
-
+from .io import SpectralData, load_csv, load_mat
 
 try:
     __version__ = version("specpls")
@@ -16,4 +16,7 @@ except PackageNotFoundError:  # running from a source checkout without install
 
 __all__ = [
     "__version__",
+    "SpectralData",
+    "load_csv",
+    "load_mat",
 ]
