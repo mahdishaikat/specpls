@@ -8,6 +8,15 @@ spectroscopic PAT data.
 from importlib.metadata import PackageNotFoundError, version
 
 from .io import SpectralData, load_csv, load_mat
+from .preprocessing import (
+    MSC,
+    SNV,
+    AsLSBaseline,
+    Detrend,
+    RegionSelector,
+    SavitzkyGolay,
+    build_preprocessing,
+)
 
 try:
     __version__ = version("specpls")
@@ -19,4 +28,11 @@ __all__ = [
     "SpectralData",
     "load_csv",
     "load_mat",
+    "SNV",
+    "MSC",
+    "SavitzkyGolay",
+    "Detrend",
+    "AsLSBaseline",
+    "RegionSelector",
+    "build_preprocessing",
 ]
