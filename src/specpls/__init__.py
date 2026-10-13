@@ -8,6 +8,7 @@ spectroscopic PAT data.
 from importlib.metadata import PackageNotFoundError, version
 
 from .io import SpectralData, load_csv, load_mat
+from .model import PLSModel, load_model
 from .preprocessing import (
     MSC,
     SNV,
@@ -25,6 +26,8 @@ except PackageNotFoundError:  # running from a source checkout without install
 
 __all__ = [
     "__version__",
+    "PLSModel",
+    "load_model",
     "SpectralData",
     "load_csv",
     "load_mat",
