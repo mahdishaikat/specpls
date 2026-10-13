@@ -1,0 +1,51 @@
+site_name: specpls
+site_description: PLS calibration models for process spectroscopy
+repo_url: https://github.com/YOUR-GITHUB-USERNAME/specpls
+repo_name: specpls
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - User guide:
+      - Preprocessing: preprocessing.md
+      - Building and validating models: modelling.md
+      - Diagnostics: diagnostics.md
+      - Deployment: deployment.md
+  - Developer guide: developer-guide.md
+  - API reference: api.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_source: false
+            members_order: source
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc:
+      permalink: true
