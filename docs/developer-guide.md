@@ -39,7 +39,7 @@ How the project is engineered, and how to work on it.
 
 ## Workflow
 
-See [CONTRIBUTING.md](https://github.com/YOUR-GITHUB-USERNAME/specpls/blob/main/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/mahdishaikat/specpls/blob/main/CONTRIBUTING.md)
 for branches, commit messages, pull requests and the review checklist.
 
 ## Roadmap

@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-pip install "specpls[plot] @ git+https://github.com/YOUR-GITHUB-USERNAME/specpls"
+pip install "specpls[plot] @ git+https://github.com/mahdishaikat/specpls"
 ```
 
 Python 3.10 or newer is required. The `plot` extra installs matplotlib.

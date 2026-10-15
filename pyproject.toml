@@ -41,8 +41,8 @@ docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.25"]
 specpls = "specpls.cli:main"
 
 [project.urls]
-Documentation = "https://YOUR-GITHUB-USERNAME.github.io/specpls"
-Source = "https://github.com/YOUR-GITHUB-USERNAME/specpls"
+Documentation = "https://mahdishaikat.github.io/specpls"
+Source = "https://github.com/mahdishaikat/specpls"
 
 [tool.setuptools.packages.find]
 where = ["src"]

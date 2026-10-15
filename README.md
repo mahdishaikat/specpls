@@ -1,6 +1,6 @@
 # specpls
 
-[![CI](https://github.com/YOUR-GITHUB-USERNAME/specpls/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-GITHUB-USERNAME/specpls/actions/workflows/ci.yml)
+[![CI](https://github.com/mahdishaikat/specpls/actions/workflows/ci.yml/badge.svg)](https://github.com/mahdishaikat/specpls/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -44,13 +44,13 @@ model.save("glucose.joblib")
 ## Installation
 
 ```bash
-pip install "specpls[plot] @ git+https://github.com/YOUR-GITHUB-USERNAME/specpls"
+pip install "specpls[plot] @ git+https://github.com/mahdishaikat/specpls"
 ```
 
 For development:
 
 ```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/specpls
+git clone https://github.com/mahdishaikat/specpls
 cd specpls
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev,docs]"

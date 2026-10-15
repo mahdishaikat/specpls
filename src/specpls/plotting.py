@@ -16,7 +16,12 @@ __all__ = [
     "plot_t2_q",
     "plot_overview",
     "plot_ipls",
+    "plot_scores",
+    "plot_loadings",
 ]
+
+CAL_STYLE = {"color": "#2a78d6", "marker": "o", "label": "Calibration"}
+TEST_STYLE = {"color": "#eb6834", "marker": "D", "label": "Test"}
 
 
 def _plt():
@@ -85,9 +90,13 @@ def plot_predicted_vs_measured(model, y_cal, X_test=None, y_test=None, ax=None, 
     ax.scatter(
         y_cal,
         model.cv_predictions_,
-        s=22,
-        alpha=0.75,
-        label=f"CV  RMSECV={cal['rmsecv']:.3g}  R²={cal['r2_cv']:.3f}",
+        s=36,
+        alpha=0.85,
+        color=CAL_STYLE["color"],
+        marker=CAL_STYLE["marker"],
+        edgecolor="white",
+        lw=0.6,
+        label=f"Calibration (CV)  RMSECV={cal['rmsecv']:.3g}  R²={cal['r2_cv']:.3f}",
     )
     values = [y_cal, model.cv_predictions_]
     if X_test is not None and y_test is not None:
@@ -96,9 +105,11 @@ def plot_predicted_vs_measured(model, y_cal, X_test=None, y_test=None, ax=None, 
         ax.scatter(
             y_test,
             y_pred,
-            s=30,
-            marker="D",
-            color="C3",
+            s=40,
+            marker=TEST_STYLE["marker"],
+            color=TEST_STYLE["color"],
+            edgecolor="white",
+            lw=0.6,
             label=f"Test  RMSEP={test['rmsep']:.3g}  R²={test['r2']:.3f}",
         )
         values += [np.asarray(y_test, float), y_pred]
@@ -106,6 +117,9 @@ def plot_predicted_vs_measured(model, y_cal, X_test=None, y_test=None, ax=None, 
     hi = max(v.max() for v in values)
     pad = 0.05 * (hi - lo)
     ax.plot([lo - pad, hi + pad], [lo - pad, hi + pad], "k--", lw=1)
+    ax.set_xlim(lo - pad, hi + pad)
+    ax.set_ylim(lo - pad, hi + pad)
+    ax.set_aspect("equal", adjustable="box")
     name = model.target_name_ or "y"
     suffix = f" ({units})" if units else ""
     ax.set_xlabel(f"Measured {name}{suffix}")
@@ -128,21 +142,89 @@ def plot_vip(model, ax=None, threshold=1.0):
     return ax
 
 
-def plot_t2_q(model, X, ax=None, confidence=0.95, labels=None):
-    """Hotelling's T2 versus Q residuals with control limits."""
+def plot_t2_q(model, X, ax=None, confidence=0.95, labels=None, X_test=None, test_labels=None):
+    """Hotelling's T2 versus Q residuals with control limits.
+
+    ``X`` is plotted as calibration (blue circles); an optional ``X_test`` is
+    added as test samples (orange diamonds). Samples outside a limit are
+    labelled when labels are given.
+    """
     ax = _axes(ax)
-    out = model.outliers(X, confidence)
-    flagged = out["t2_flag"] | out["q_flag"]
-    ax.scatter(out["t2"][~flagged], out["q"][~flagged], s=22, alpha=0.75)
-    ax.scatter(out["t2"][flagged], out["q"][flagged], s=30, color="C3", label="outside limit")
-    ax.axvline(out["t2_limit"], color="C3", ls="--", lw=1)
-    ax.axhline(out["q_limit"], color="C3", ls="--", lw=1)
-    if labels is not None:
-        for i in np.flatnonzero(flagged):
-            ax.annotate(str(labels[i]), (out["t2"][i], out["q"][i]), fontsize=7)
-    ax.set_xlabel(f"Hotelling's T² ({confidence:.0%} limit)")
-    ax.set_ylabel(f"Q residuals ({confidence:.0%} limit)")
-    if flagged.any():
+    sets = [(X, labels, CAL_STYLE)]
+    if X_test is not None:
+        sets.append((X_test, test_labels, TEST_STYLE))
+    for data, names, style in sets:
+        out = model.outliers(data, confidence)
+        ax.scatter(out["t2"], out["q"], s=36, alpha=0.85, color=style["color"],
+                   marker=style["marker"], label=style["label"], edgecolor="white", lw=0.6)
+        flagged = out["t2_flag"] | out["q_flag"]
+        if names is not None:
+            for i in np.flatnonzero(flagged):
+                ax.annotate(str(names[i]), (out["t2"][i], out["q"][i]), fontsize=7,
+                            xytext=(3, 3), textcoords="offset points")
+    ax.axvline(out["t2_limit"], color="0.35", ls="--", lw=1)
+    ax.axhline(out["q_limit"], color="0.35", ls="--", lw=1)
+    ax.set_xlabel(f"Hotelling's T² (dashed: {confidence:.0%} limit)")
+    ax.set_ylabel(f"Q residuals (dashed: {confidence:.0%} limit)")
+    if X_test is not None:
+        ax.legend(frameon=False)
+    return ax
+
+
+def plot_scores(model, X, y=None, X_test=None, y_test=None, components=(1, 2), ax=None):
+    """Score plot.
+
+    With two or more LVs: LV ``components[0]`` versus LV ``components[1]``.
+    With a one-LV model: LV1 score for each sample (sample order on x).
+    Points are calibration (blue circles) and test (orange diamonds).
+    """
+    ax = _axes(ax)
+    t_cal = model.scores(X)
+    t_test = model.scores(X_test) if X_test is not None else None
+    pls = model.pls_
+    x_var = np.var(model.transform(X), axis=0).sum()
+    explained = [
+        np.var(np.outer(model._train_scores[:, a], pls.x_loadings_[:, a]), axis=0).sum()
+        / x_var
+        for a in range(model.n_components_)
+    ]
+    if model.n_components_ >= 2:
+        i, j = components[0] - 1, components[1] - 1
+        ax.scatter(t_cal[:, i], t_cal[:, j], s=36, edgecolor="white", lw=0.6, **CAL_STYLE)
+        if t_test is not None:
+            ax.scatter(t_test[:, i], t_test[:, j], s=40, edgecolor="white", lw=0.6,
+                       **TEST_STYLE)
+        ax.set_xlabel(f"LV{i + 1} scores ({explained[i]:.1%} of X variance)")
+        ax.set_ylabel(f"LV{j + 1} scores ({explained[j]:.1%} of X variance)")
+        ax.axvline(0, color="0.8", lw=0.8)
+    else:
+        n_cal = t_cal.shape[0]
+        ax.scatter(np.arange(1, n_cal + 1), t_cal[:, 0], s=36, edgecolor="white", lw=0.6,
+                   **CAL_STYLE)
+        if t_test is not None:
+            ax.scatter(np.arange(n_cal + 1, n_cal + 1 + t_test.shape[0]), t_test[:, 0], s=40,
+                       edgecolor="white", lw=0.6, **TEST_STYLE)
+        ax.set_xlabel("Sample")
+        ax.set_ylabel(f"LV1 scores ({explained[0]:.1%} of X variance)")
+    ax.axhline(0, color="0.8", lw=0.8)
+    ax.legend(frameon=False)
+    return ax
+
+
+def plot_loadings(model, components=None, ax=None):
+    """X-loadings of the selected LVs across the spectrum."""
+    ax = _axes(ax)
+    loadings = model.pls_.x_loadings_
+    axis = model.model_wavenumbers_
+    x = axis if axis is not None else np.arange(loadings.shape[0])
+    comps = components or range(1, model.n_components_ + 1)
+    for k, a in enumerate(comps):
+        ax.plot(x, loadings[:, a - 1], lw=1.2, color=["#2a78d6", "#eb6834", "#1baf7a",
+                                                       "#eda100"][k % 4], label=f"LV{a}")
+    ax.axhline(0, color="0.8", lw=0.8)
+    ax.set_xlabel("Raman shift (cm$^{-1}$)" if axis is not None else "Variable")
+    ax.set_ylabel("Loading")
+    if len(list(comps)) > 1:
         ax.legend(frameon=False)
     return ax
 

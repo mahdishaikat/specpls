@@ -5,7 +5,7 @@ Thanks for helping. This page describes how changes get from an idea to `main`.
 ## 1. Set up
 
 ```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/specpls
+git clone https://github.com/mahdishaikat/specpls
 cd specpls
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev,docs]"

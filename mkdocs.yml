@@ -1,6 +1,6 @@
 site_name: specpls
 site_description: PLS calibration models for process spectroscopy
-repo_url: https://github.com/YOUR-GITHUB-USERNAME/specpls
+repo_url: https://github.com/mahdishaikat/specpls
 repo_name: specpls
 
 theme:

@@ -167,3 +167,23 @@ def test_ipls_ratio_guard_impossible(one_good_interval):
     X, y = one_good_interval
     with pytest.raises(ValueError, match="No single interval"):
         ipls(X, y, n_intervals=10, max_intervals=2, cv=5, max_cv_ratio=0.5)
+
+
+# ----------------------------------------------------------------- score / loading plots
+@pytest.mark.parametrize("n_lv", [1, 3])
+def test_score_and_loading_plots(culture, n_lv):
+    pytest.importorskip("matplotlib")
+    import matplotlib
+
+    matplotlib.use("Agg")
+    from specpls.plotting import plot_loadings, plot_scores, plot_t2_q
+
+    X, y = culture.X, culture.target("glucose")
+    model = PLSModel(preprocessing="snv", n_components=n_lv, cv=5).fit(
+        X[:50], y[:50], wavenumbers=culture.wavenumbers
+    )
+    ax = plot_scores(model, X[:50], y[:50], X[50:], y[50:])
+    assert "LV1" in (ax.get_ylabel() if n_lv == 1 else ax.get_xlabel())
+    ax = plot_loadings(model)
+    assert len(ax.lines) == n_lv + 1  # one line per LV plus the zero line
+    plot_t2_q(model, X[:50], X_test=X[50:], labels=list(range(50)))
