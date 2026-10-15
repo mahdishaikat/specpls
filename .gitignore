@@ -20,6 +20,9 @@ examples/output/
 *.joblib
 *.mat
 data/
+tgrs data/
+*.xlsx
+*.csv
 
 # OS / editors
 .DS_Store
