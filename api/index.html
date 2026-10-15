@@ -1,0 +1,5087 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="PLS calibration models for process spectroscopy">
+      
+      
+      
+      
+        <link rel="prev" href="../developer-guide/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>API reference - specpls</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="specpls" class="md-header__button md-logo" aria-label="specpls" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            specpls
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mahdishaikat/specpls" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    specpls
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="specpls" class="md-nav__button md-logo" aria-label="specpls" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    specpls
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mahdishaikat/specpls" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    specpls
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../preprocessing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preprocessing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modelling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building and validating models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diagnostics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLSModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.pls_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pls_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.model_wavenumbers_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        model_wavenumbers_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.coef_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coef_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        evaluate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        transform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.hotelling_t2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hotelling_t2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.q_residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q_residuals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.t2_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        t2_limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.q_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q_limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.outliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        outliers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.vip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.save" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.load_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.PREPROCESSORS" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PREPROCESSORS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.SNV" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SNV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.MSC" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.SavitzkyGolay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SavitzkyGolay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.Detrend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detrend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.AsLSBaseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AsLSBaseline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.RegionSelector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RegionSelector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.EPO" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EPO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.VariableSelector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VariableSelector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.build_preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build_preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.VenetianBlinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VenetianBlinds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.LVSelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LVSelection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rmse
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        r2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bias
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.sep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.rpd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rpd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.regression_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        regression_metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.make_cv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_cv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.select_n_components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        select_n_components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpectralData
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SpectralData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.subset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        subset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.dropna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dropna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.to_frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.split_columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        split_columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.load_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_csv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.load_mat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_mat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.datasets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        datasets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.datasets.make_synthetic_cell_culture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_synthetic_cell_culture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plotting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_spectra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_spectra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_rmsecv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_rmsecv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_predicted_vs_measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_predicted_vs_measured
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_vip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_vip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_t2_q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_t2_q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_scores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_loadings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_loadings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_ipls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_ipls
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PLSModel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.pls_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pls_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.model_wavenumbers_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        model_wavenumbers_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.coef_" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        coef_
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        evaluate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        transform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.hotelling_t2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hotelling_t2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.q_residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q_residuals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.t2_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        t2_limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.q_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        q_limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.outliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        outliers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.vip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        vip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.PLSModel.save" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        save
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.model.load_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.PREPROCESSORS" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PREPROCESSORS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.SNV" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SNV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.MSC" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.SavitzkyGolay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SavitzkyGolay
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.Detrend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detrend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.AsLSBaseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AsLSBaseline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.RegionSelector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RegionSelector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.EPO" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EPO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.VariableSelector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VariableSelector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.preprocessing.build_preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        build_preprocessing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.VenetianBlinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VenetianBlinds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.LVSelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LVSelection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rmse
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        r2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bias
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.sep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.rpd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rpd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.regression_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        regression_metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.make_cv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_cv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.validation.select_n_components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        select_n_components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpectralData
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SpectralData">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.subset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        subset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.dropna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dropna
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specpls.io.SpectralData.to_frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.split_columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        split_columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.load_csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_csv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.io.load_mat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_mat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.datasets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        datasets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.datasets.make_synthetic_cell_culture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        make_synthetic_cell_culture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plotting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_spectra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_spectra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_rmsecv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_rmsecv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_predicted_vs_measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_predicted_vs_measured
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_vip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_vip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_t2_q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_t2_q
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_scores
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_loadings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_loadings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specpls.plotting.plot_ipls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plot_ipls
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<h2 id="model">Model<a class="headerlink" href="#model" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="specpls.model.PLSModel"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="sklearn.base.RegressorMixin">RegressorMixin</span></code>, <code><span title="sklearn.base.BaseEstimator">BaseEstimator</span></code></p>
+
+
+
+        <p>Single-response PLS calibration for spectroscopic data.</p>
+<p>Wraps preprocessing and :class:<code>sklearn.cross_decomposition.PLSRegression</code>
+in one scikit-learn estimator and adds what a chemometric workflow needs:
+automatic choice of latent variables from RMSECV, Hotelling's T2 and
+Q-residual diagnostics, VIP scores, and safe save/load for deployment.</p>
+<p>Preprocessing is fitted <em>inside</em> every cross-validation fold, so RMSECV is
+not optimistically biased by data-dependent steps such as MSC.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>preprocessing</code>
+            </td>
+            <td>
+                  <code>str, list of transformers, Pipeline or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Preprocessing applied before PLS. A string such as
+<code>"savgol:15:2:1,snv"</code> is parsed with
+:func:<code>specpls.preprocessing.build_preprocessing</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_components</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span> or &#39;auto&#39;</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of latent variables. <code>"auto"</code> picks it from RMSECV using
+<code>lv_rule</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;auto&#34;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_components</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Largest number of LVs tried when <code>n_components="auto"</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>cv</code>
+            </td>
+            <td>
+                  <code>(<span title="int">int</span>, <span title="str">str</span> or <span title="splitter">splitter</span>)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Cross-validation scheme, see :func:<code>specpls.validation.make_cv</code>.
+Use <code>"batch"</code> together with <code>groups</code> in :meth:<code>fit</code> to hold out
+whole bioreactor runs.</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lv_rule</code>
+            </td>
+            <td>
+                  <code>(&#39;parsimonious&#39;, &#39;min&#39;, &#39;first_min&#39;)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Rule for choosing LVs from the RMSECV curve.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;parsimonious&#34;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lv_tolerance</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Relative tolerance for the parsimonious rule.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.02</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>regions</code>
+            </td>
+            <td>
+                  <code>list of (low, high)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Wavenumber regions to keep, e.g. <code>[(400, 1800)]</code>. Applied before
+preprocessing. Requires <code>wavenumbers</code> in :meth:<code>fit</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>scale</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Autoscale variables inside PLS. Spectra are normally only
+mean-centred, so the default is <code>False</code> (unlike scikit-learn).</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_cv_ratio</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Over-fitting guard for automatic LV selection: only LVs with
+<code>RMSECV / RMSEC &lt;= max_cv_ratio</code> are eligible (1.2 = RMSECV at most
+20 % above RMSEC). A warning is issued if no LV qualifies.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.n_components_">n_components_</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of LVs in the final model.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.rmsecv_curve_">rmsecv_curve_</span></code></td>
+            <td>
+                  <code><span title="ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>RMSECV for 1..max_components LVs (<code>None</code> if LVs were fixed).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.rmsec_curve_">rmsec_curve_</span></code></td>
+            <td>
+                  <code><span title="ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>RMSEC for the same LVs (<code>None</code> if LVs were fixed).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.ratio_ok_">ratio_ok_</span></code></td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>False if <code>max_cv_ratio</code> was set and no LV satisfied it.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.cv_predictions_">cv_predictions_</span></code></td>
+            <td>
+                  <code><span title="ndarray">ndarray</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Cross-validated predictions for the training samples.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.pipeline_">pipeline_</span></code></td>
+            <td>
+                  <code><span title="sklearn.pipeline.Pipeline">Pipeline</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The fitted region selection + preprocessing + PLS pipeline.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.calibration_">calibration_</span></code></td>
+            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Figures of merit for calibration (RMSEC) and cross-validation (RMSECV).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.wavenumbers_">wavenumbers_</span></code></td>
+            <td>
+                  <code><span title="ndarray">ndarray</span> or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Wavenumber axis the model was trained on.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.model.PLSModel.target_name_">target_name_</span></code></td>
+            <td>
+                  <code><span title="str">str</span> or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the predicted variable, e.g. <code>"glucose"</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">specpls</span><span class="w"> </span><span class="kn">import</span> <span class="n">PLSModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">specpls.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_synthetic_cell_culture</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">make_synthetic_cell_culture</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">PLSModel</span><span class="p">(</span><span class="n">preprocessing</span><span class="o">=</span><span class="s2">"savgol:15:2:1,snv"</span><span class="p">,</span> <span class="n">max_components</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">(</span><span class="s2">"glucose"</span><span class="p">),</span>
+<span class="gp">... </span>                  <span class="n">wavenumbers</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">wavenumbers</span><span class="p">,</span> <span class="n">target_name</span><span class="o">=</span><span class="s2">"glucose"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="go">True</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="specpls.model.PLSModel.pls_" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">pls_</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#specpls.model.PLSModel.pls_" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>The fitted :class:<code>~sklearn.cross_decomposition.PLSRegression</code> step.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="specpls.model.PLSModel.model_wavenumbers_" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">model_wavenumbers_</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#specpls.model.PLSModel.model_wavenumbers_" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Wavenumbers that actually enter PLS (after region selection).</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="specpls.model.PLSModel.coef_" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">coef_</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#specpls.model.PLSModel.coef_" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Regression vector on the preprocessed variables.</p>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.fit" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wavenumbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.fit" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Fit the model, choosing the number of LVs by cross-validation.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>X</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_samples, n_wavenumbers)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Calibration spectra.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>y</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_samples,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Reference values (e.g. glucose in g/L).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>wavenumbers</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_wavenumbers,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Wavenumber axis. Stored with the model and checked at prediction
+time; required if <code>regions</code> is set.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>groups</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_samples,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Batch / run labels for group-aware cross-validation.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>target_name</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Name of the response, stored for reporting.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="self">self</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.predict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wavenumbers</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.predict" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Predict the response for new spectra.</p>
+<p>If <code>wavenumbers</code> is given, it is checked against the calibration
+axis, which guards against applying a model to spectra from a
+different instrument set-up.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.evaluate" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">evaluate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wavenumbers</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.evaluate" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Figures of merit on an independent test set (RMSEP, R2, bias, ...).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.summary" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">summary</span><span class="p">(</span><span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.summary" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>One-row summary in the style of a publication table.</p>
+<p>Returns LVs, RMSEC, R2 cal, RMSECV, R2 CV and, if a test set is given,
+RMSEP and R2 test.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.transform" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.transform" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Preprocessed spectra (input to PLS) for inspection or plotting.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.scores" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">scores</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.scores" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Latent-variable scores, shape <code>(n_samples, n_components_)</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.hotelling_t2" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">hotelling_t2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.hotelling_t2" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Hotelling's T2 for each sample (distance within the model plane).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.q_residuals" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">q_residuals</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.q_residuals" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Q residuals (squared prediction error, SPE) for each sample.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.t2_limit" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">t2_limit</span><span class="p">(</span><span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.t2_limit" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>T2 control limit based on the F distribution.</p>
+<p><code>A (n-1) / (n-A) * F(confidence; A, n-A)</code> with <code>A</code> LVs and <code>n</code>
+calibration samples.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.q_limit" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">q_limit</span><span class="p">(</span><span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.q_limit" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Q control limit using Box's scaled chi-square approximation.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.outliers" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">outliers</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.outliers" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>T2, Q and boolean flags for samples outside the control limits.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.vip" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">vip</span><span class="p">()</span></code>
+
+<a href="#specpls.model.PLSModel.vip" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Variable Importance in Projection for each (selected) wavenumber.</p>
+<p>Variables with VIP &gt; 1 are conventionally considered important.
+The mean of VIP**2 over all variables equals 1.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.model.PLSModel.save" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></code>
+
+<a href="#specpls.model.PLSModel.save" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Save the fitted model with metadata to a <code>.joblib</code> file.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="specpls.model.load_model"></a>
+    <div class="doc doc-contents first">
+
+        <p>Load a model saved with :meth:<code>PLSModel.save</code>.</p>
+<p>Warns if it was created with a different scikit-learn version, because
+pickled estimators are not guaranteed to be compatible across versions.</p>
+<p>Only load files from sources you trust: joblib files can execute code.</p>
+
+
+    </div>
+
+</div><h2 id="preprocessing">Preprocessing<a class="headerlink" href="#preprocessing" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="specpls.preprocessing"></a>
+    <div class="doc doc-contents first">
+
+        <p>Spectral preprocessing transformers.</p>
+<p>Every transformer follows the scikit-learn <code>fit</code>/<code>transform</code> API, so they can
+be chained in a :class:<code>sklearn.pipeline.Pipeline</code> and are re-fitted inside each
+cross-validation fold. That matters for data-dependent methods such as MSC,
+whose reference spectrum must come from the training data only.</p>
+<p>Spectra are always arranged as <code>(n_samples, n_wavenumbers)</code>.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="specpls.preprocessing.PREPROCESSORS" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">PREPROCESSORS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'snv'</span><span class="p">:</span> <span class="p">(</span><span class="n">SNV</span><span class="p">,</span> <span class="p">()),</span> <span class="s1">'msc'</span><span class="p">:</span> <span class="p">(</span><span class="n">MSC</span><span class="p">,</span> <span class="p">()),</span> <span class="s1">'savgol'</span><span class="p">:</span> <span class="p">(</span><span class="n">SavitzkyGolay</span><span class="p">,</span> <span class="p">(</span><span class="s1">'window_length'</span><span class="p">,</span> <span class="s1">'polyorder'</span><span class="p">,</span> <span class="s1">'deriv'</span><span class="p">)),</span> <span class="s1">'sg'</span><span class="p">:</span> <span class="p">(</span><span class="n">SavitzkyGolay</span><span class="p">,</span> <span class="p">(</span><span class="s1">'window_length'</span><span class="p">,</span> <span class="s1">'polyorder'</span><span class="p">,</span> <span class="s1">'deriv'</span><span class="p">)),</span> <span class="s1">'detrend'</span><span class="p">:</span> <span class="p">(</span><span class="n">Detrend</span><span class="p">,</span> <span class="p">(</span><span class="s1">'order'</span><span class="p">,)),</span> <span class="s1">'asls'</span><span class="p">:</span> <span class="p">(</span><span class="n">AsLSBaseline</span><span class="p">,</span> <span class="p">(</span><span class="s1">'lam'</span><span class="p">,</span> <span class="s1">'p'</span><span class="p">,</span> <span class="s1">'n_iter'</span><span class="p">)),</span> <span class="s1">'epo'</span><span class="p">:</span> <span class="p">(</span><span class="n">EPO</span><span class="p">,</span> <span class="p">(</span><span class="s1">'n_components'</span><span class="p">,))}</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#specpls.preprocessing.PREPROCESSORS" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Short names accepted by :func:<code>build_preprocessing</code> and the CLI.</p>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.SNV" class="doc doc-heading">
+            <code>SNV</code>
+
+
+<a href="#specpls.preprocessing.SNV" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Standard Normal Variate: centre and scale each spectrum individually.</p>
+<p>Removes multiplicative scatter and path-length effects. Stateless: fitting
+only records the number of wavenumbers.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.MSC" class="doc doc-heading">
+            <code>MSC</code>
+
+
+<a href="#specpls.preprocessing.MSC" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Multiplicative Scatter Correction.</p>
+<p>Each spectrum <code>x</code> is regressed on a reference spectrum <code>r</code>
+(<code>x = a + b * r</code>) and corrected as <code>(x - a) / b</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>reference</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_wavenumbers,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Fixed reference spectrum. If <code>None</code> (default), the mean spectrum of
+the training data is used.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.SavitzkyGolay" class="doc doc-heading">
+            <code>SavitzkyGolay</code>
+
+
+<a href="#specpls.preprocessing.SavitzkyGolay" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Savitzky-Golay smoothing or derivative along the wavenumber axis.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>window_length</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of points in the filter window. Must be odd and greater than
+<code>polyorder</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>15</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>polyorder</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Order of the fitted polynomial.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>deriv</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Derivative order (0 = smoothing only, 1 = first derivative, ...).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.Detrend" class="doc doc-heading">
+            <code>Detrend</code>
+
+
+<a href="#specpls.preprocessing.Detrend" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Subtract a low-order polynomial baseline fitted to each spectrum.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>order</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Polynomial order (0 = offset, 1 = linear, 2 = quadratic, ...).</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.AsLSBaseline" class="doc doc-heading">
+            <code>AsLSBaseline</code>
+
+
+<a href="#specpls.preprocessing.AsLSBaseline" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Asymmetric Least Squares baseline removal (Eilers &amp; Boelens, 2005).</p>
+<p>Fits a smooth baseline that stays below the Raman peaks, which suits broad
+fluorescence backgrounds.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>lam</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Smoothness penalty. Larger values give a stiffer baseline.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1e5</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>p</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Asymmetry weight for points above the baseline (0 &lt; p &lt; 1).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.01</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_iter</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of reweighting iterations.</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.RegionSelector" class="doc doc-heading">
+            <code>RegionSelector</code>
+
+
+<a href="#specpls.preprocessing.RegionSelector" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Keep only selected wavenumber regions.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>wavenumbers</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_wavenumbers,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Wavenumber axis of the incoming spectra (e.g. Raman shift in cm-1).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>regions</code>
+            </td>
+            <td>
+                  <code>sequence of (low, high) tuples</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Inclusive ranges to keep, e.g. <code>[(400, 1800)]</code> or
+<code>[(800, 1200), (1400, 1500)]</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.EPO" class="doc doc-heading">
+            <code>EPO</code>
+
+
+<a href="#specpls.preprocessing.EPO" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>External Parameter Orthogonalisation (Roger et al., 2003).</p>
+<p>Estimates the directions of unwanted spectral variation ("clutter") and
+projects every spectrum onto the space orthogonal to them:
+<code>X_epo = X (I - V V')</code>, where <code>V</code> holds the first <code>n_components</code>
+right singular vectors of the clutter matrix <code>D</code>.</p>
+<p>How <code>D</code> is built:</p>
+<ul>
+<li><code>clutter</code> given: those spectra are used as <code>D</code> directly, e.g.
+  differences between the same sample measured at two temperatures or
+  in two vessels.</li>
+<li>otherwise (default, "y-gradient", as in PLS_Toolbox GLSW/EPO): the
+  calibration spectra are sorted by <code>y</code> and <code>D</code> contains differences
+  between neighbouring samples. Samples with nearly the same analyte
+  concentration should have nearly the same spectrum, so what differs
+  between them is interference (fluorescence, cell density, matrix).</li>
+</ul>
+<p><code>y</code> is required in <code>fit</code> for the y-gradient mode. Inside
+:class:<code>~specpls.model.PLSModel</code> it is fitted on the training folds only.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_components</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of clutter directions removed. Choose by RMSECV; too many
+removes analyte signal.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>clutter</code>
+            </td>
+            <td>
+                  <code>array-like of shape (n_clutter, n_wavenumbers)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Explicit clutter (difference) spectra, already preprocessed the same
+way as <code>X</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.preprocessing.VariableSelector" class="doc doc-heading">
+            <code>VariableSelector</code>
+
+
+<a href="#specpls.preprocessing.VariableSelector" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="specpls.preprocessing._SpectralTransformer">_SpectralTransformer</span></code></p>
+
+
+
+        <p>Keep a fixed subset of variables (e.g. intervals chosen by iPLS).</p>
+<p>Unlike :class:<code>RegionSelector</code> it works on column positions, so it can be
+placed <em>after</em> preprocessing.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>mask</code>
+            </td>
+            <td>
+                  <code>array-like of bool or int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Boolean mask over the variables, or integer column indices.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.preprocessing.build_preprocessing" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">build_preprocessing</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span></code>
+
+<a href="#specpls.preprocessing.build_preprocessing" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Build a preprocessing pipeline from a compact text specification.</p>
+<p>Steps are separated by commas and arguments by colons, applied in order.</p>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">build_preprocessing</span><span class="p">(</span><span class="s2">"savgol:15:2:1,snv"</span><span class="p">)</span>   <span class="c1"># 1st derivative, then SNV</span>
+<span class="go">Pipeline(steps=[('savitzkygolay', SavitzkyGolay(deriv=1)), ('snv', SNV())])</span>
+</code></pre></div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>spec</code>
+            </td>
+            <td>
+                  <code>str, list of transformers, or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A string such as <code>"asls:1e5:0.01,snv"</code>, a list of already-built
+transformers, or <code>None</code>/<code>""</code> for no preprocessing.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="sklearn.pipeline.Pipeline">Pipeline</span> or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="specpls.validation"></a>
+    <div class="doc doc-contents first">
+
+        <p>Figures of merit and cross-validation schemes for calibration models.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.validation.VenetianBlinds" class="doc doc-heading">
+            <code>VenetianBlinds</code>
+
+
+<a href="#specpls.validation.VenetianBlinds" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="sklearn.model_selection.BaseCrossValidator">BaseCrossValidator</span></code></p>
+
+
+
+        <p>Venetian-blinds cross-validation (sample <code>i</code> goes to fold <code>i % k</code>).</p>
+<p>This is the default scheme in many chemometrics packages (e.g. "vet" in
+PLS_Toolbox). It assumes samples are ordered, e.g. by time or
+concentration, so that every fold spans the whole range.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_splits</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of folds.</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.validation.LVSelection" class="doc doc-heading">
+            <code>LVSelection</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#specpls.validation.LVSelection" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Result of latent-variable selection.</p>
+<p><code>ratio_ok</code> is False when a <code>max_ratio</code> was requested but no number of
+LVs satisfied it; the LV count with the smallest RMSECV/RMSEC ratio is
+returned in that case.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.rmse" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">rmse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.rmse" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Root mean square error. Used for RMSEC, RMSECV and RMSEP.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.r2" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">r2</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.r2" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Coefficient of determination, <code>1 - SS_res / SS_tot</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.bias" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">bias</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.bias" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Mean of <code>y_pred - y_true</code>. Positive means the model over-predicts.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.sep" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">sep</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.sep" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Standard error of prediction, corrected for bias.</p>
+<p><code>RMSEP**2 ~= SEP**2 + bias**2</code> (exact up to the n / n-1 factor).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.rpd" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">rpd</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.rpd" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Ratio of performance to deviation: <code>SD(y_true) / SEP</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.regression_metrics" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">regression_metrics</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.regression_metrics" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>All figures of merit as a dict: rmse, r2, bias, sep, rpd, n.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.make_cv" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">make_cv</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.make_cv" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Turn a short description into a scikit-learn CV splitter.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>cv</code>
+            </td>
+            <td>
+                  <code>(<span title="int">int</span>, <span title="str">str</span> or <span title="splitter">splitter</span>)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>int</code> - venetian blinds with that many folds</li>
+<li><code>"venetian:k"</code> - venetian blinds, k folds</li>
+<li><code>"kfold:k"</code> - contiguous blocks, k folds (no shuffling)</li>
+<li><code>"loo"</code> - leave-one-out</li>
+<li><code>"batch"</code> / <code>"group"</code> - leave-one-group-out; requires <code>groups</code>.
+  Use this for bioprocess data so that all samples from one batch or
+  bioreactor run are held out together.</li>
+<li>any object with a <code>split</code> method is returned unchanged.</li>
+</ul>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>groups</code>
+            </td>
+            <td>
+                  <code><span title="array">array</span> - <span title="like">like</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Group labels (e.g. batch IDs). Required for <code>"batch"</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.validation.select_n_components" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">select_n_components</span><span class="p">(</span><span class="n">rmsecv</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="s1">'parsimonious'</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">rmsec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_ratio</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.validation.select_n_components" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Pick the number of latent variables from an RMSECV curve.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>rmsecv</code>
+            </td>
+            <td>
+                  <code><span title="array">array</span> - <span title="like">like</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>RMSECV for 1, 2, ..., A latent variables.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rule</code>
+            </td>
+            <td>
+                  <code>(&#39;parsimonious&#39;, &#39;min&#39;, &#39;first_min&#39;)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>"min"</code> - global minimum. Tends to over-fit on small data sets.</li>
+<li><code>"first_min"</code> - first local minimum of the curve.</li>
+<li><code>"parsimonious"</code> (default) - fewest LVs whose RMSECV is within
+  <code>tolerance</code> (relative) of the global minimum. Trades a negligible
+  loss of accuracy for a simpler, more robust model.</li>
+</ul>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;parsimonious&#34;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tolerance</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Relative tolerance for the parsimonious rule (0.02 = 2 %).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.02</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rmsec</code>
+            </td>
+            <td>
+                  <code><span title="array">array</span> - <span title="like">like</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>RMSEC for the same LVs. Required with <code>max_ratio</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_ratio</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Over-fitting guard: only LVs with <code>RMSECV / RMSEC &lt;= max_ratio</code> are
+eligible (e.g. 1.2 means RMSECV may exceed RMSEC by at most 20 %).
+The rule is then applied among the eligible LVs.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="LVSelection
+
+
+  
+      dataclass
+   (specpls.validation.LVSelection)" href="#specpls.validation.LVSelection">LVSelection</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="specpls.io"></a>
+    <div class="doc doc-contents first">
+
+        <p>Loading spectra and reference values from CSV, Excel-exported CSV and MATLAB files.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="specpls.io.SpectralData" class="doc doc-heading">
+            <code>SpectralData</code>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#specpls.io.SpectralData" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Spectra plus sample metadata.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.io.SpectralData.X">X</span></code></td>
+            <td>
+                  <code>ndarray of shape (n_samples, n_wavenumbers)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Spectra, one row per sample.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.io.SpectralData.wavenumbers">wavenumbers</span></code></td>
+            <td>
+                  <code>ndarray of shape (n_wavenumbers,)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Spectral axis (e.g. Raman shift in cm-1).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="specpls.io.SpectralData.meta">meta</span></code></td>
+            <td>
+                  <code><span title="pandas.DataFrame">DataFrame</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>One row per sample: reference values (glucose, lactate, ...),
+batch IDs, culture day, etc.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="specpls.io.SpectralData.target" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">target</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></code>
+
+<a href="#specpls.io.SpectralData.target" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Reference values for one analyte as a float array.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="specpls.io.SpectralData.subset" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">subset</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span></code>
+
+<a href="#specpls.io.SpectralData.subset" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Rows selected by a boolean mask or integer index.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="specpls.io.SpectralData.dropna" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">dropna</span><span class="p">(</span><span class="n">column</span><span class="p">)</span></code>
+
+<a href="#specpls.io.SpectralData.dropna" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Drop samples whose <code>column</code> is missing (e.g. no reference value).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="specpls.io.SpectralData.to_frame" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">to_frame</span><span class="p">()</span></code>
+
+<a href="#specpls.io.SpectralData.to_frame" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Wide table: metadata columns followed by one column per wavenumber.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.io.split_columns" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">split_columns</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></code>
+
+<a href="#specpls.io.split_columns" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Split a wide table into spectra and metadata.</p>
+<p>Columns whose header parses as a number (<code>"400"</code>, <code>"401.5"</code>) are
+treated as spectral channels; all other columns become metadata.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.io.load_csv" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">read_csv_kwargs</span><span class="p">)</span></code>
+
+<a href="#specpls.io.load_csv" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load a wide CSV file: metadata columns plus one column per wavenumber.</p>
+<p>Example layout::</p>
+<div class="highlight"><pre><span></span><code>sample_id, batch, day, glucose, lactate, 400, 401, 402, ...
+S01,       B1,    0,   5.78,    0.07,    812, 815, 820, ...
+</code></pre></div>
+<p>Extra keyword arguments are passed to :func:<code>pandas.read_csv</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.io.load_mat" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">load_mat</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">x_key</span><span class="o">=</span><span class="s1">'X'</span><span class="p">,</span> <span class="n">axis_key</span><span class="o">=</span><span class="s1">'wavenumbers'</span><span class="p">,</span> <span class="n">meta_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.io.load_mat" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Load spectra saved from MATLAB with <code>save('file.mat', 'X', 'wavenumbers', ...)</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span> or <span title="pathlib.Path">Path</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>.mat</code> file (v7 or earlier; for v7.3 save with <code>-v7</code>).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>x_key</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Variable holding the spectra matrix (samples x wavenumbers).</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;X&#34;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>axis_key</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Variable holding the spectral axis.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#34;wavenumbers&#34;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>meta_keys</code>
+            </td>
+            <td>
+                  <code>list of str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Vector variables (one value per sample) to put in <code>meta</code>,
+e.g. <code>["glucose", "lactate"]</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="specpls.datasets"></a>
+    <div class="doc doc-contents first">
+
+        <p>Synthetic Raman-like cell-culture data for examples, tests and teaching.</p>
+<p>The data are <em>simulated</em>. They mimic the structure of CHO fed-batch Raman
+data (glucose and lactate bands, cell-related bands, a broad fluorescence
+background that grows with cell density, scatter and noise) so the package
+can be demonstrated without sharing proprietary spectra.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.datasets.make_synthetic_cell_culture" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">make_synthetic_cell_culture</span><span class="p">(</span><span class="n">n_batches</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_days</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">wavenumber_range</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">1800</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">fluorescence</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.datasets.make_synthetic_cell_culture" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Simulate daily Raman spectra from fed-batch CHO cultures.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_batches</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of independent bioreactor runs.</p>
+              </div>
+            </td>
+            <td>
+                  <code>6</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_days</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Samples per run (one per day).</p>
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>wavenumber_range</code>
+            </td>
+            <td>
+                  <code>(<span title="float">float</span>, <span title="float">float</span>)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Raman shift range in cm-1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(400, 1800)</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>step</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Spacing of the wavenumber axis.</p>
+              </div>
+            </td>
+            <td>
+                  <code>2.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fluorescence</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Size of the fluorescence background relative to the strongest glucose
+band at 1 g/L. Set to 0 to simulate ideal fluorescence-free spectra.</p>
+              </div>
+            </td>
+            <td>
+                  <code>8.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>noise</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Standard deviation of additive noise.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.01</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>random_state</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span> or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Seed for reproducibility.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="SpectralData
+
+
+  
+      dataclass
+   (specpls.io.SpectralData)" href="#specpls.io.SpectralData">SpectralData</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><code>meta</code> holds <code>sample_id</code>, <code>batch</code>, <code>day</code>, <code>vcd</code>
+(1e6 cells/mL), <code>glucose</code> and <code>lactate</code> (g/L).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="specpls.plotting"></a>
+    <div class="doc doc-contents first">
+
+        <p>Standard diagnostic plots for a fitted :class:<code>~specpls.model.PLSModel</code>.</p>
+<p>Requires matplotlib (<code>pip install "specpls[plot]"</code>). Every function accepts
+an optional <code>ax</code> and returns the axes, so plots can be combined in figures.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_spectra" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_spectra</span><span class="p">(</span><span class="n">wavenumbers</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">color_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'viridis'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_spectra" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Overlay spectra, optionally coloured by a reference value.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_rmsecv" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_rmsecv</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_rmsecv" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>RMSECV versus number of latent variables, with the chosen LV marked.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_predicted_vs_measured" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_predicted_vs_measured</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">y_cal</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_predicted_vs_measured" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Cross-validated (and optional test-set) predictions against reference.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_vip" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_vip</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_vip" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>VIP scores across the spectrum with the VIP = 1 threshold.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_t2_q" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_t2_q</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_t2_q" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Hotelling's T2 versus Q residuals with control limits.</p>
+<p><code>X</code> is plotted as calibration (blue circles); an optional <code>X_test</code> is
+added as test samples (orange diamonds). Samples outside a limit are
+labelled when labels are given.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_scores" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_scores</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_scores" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Score plot.</p>
+<p>With two or more LVs: LV <code>components[0]</code> versus LV <code>components[1]</code>.
+With a one-LV model: LV1 score for each sample (sample order on x).
+Points are calibration (blue circles) and test (orange diamonds).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_loadings" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_loadings</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_loadings" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>X-loadings of the selected LVs across the spectrum.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_overview" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_overview</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_cal</span><span class="p">,</span> <span class="n">y_cal</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_overview" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Four-panel figure: RMSECV, predicted vs measured, VIP, T2-Q.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="specpls.plotting.plot_ipls" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">plot_ipls</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#specpls.plotting.plot_ipls" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Classic iPLS plot: RMSECV of each interval, selected intervals highlighted.</p>
+<p>The dashed line is the all-variable model; the grey curve (if <code>X</code> is
+given) is the mean spectrum for orientation.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
