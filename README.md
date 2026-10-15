@@ -34,7 +34,8 @@ model.save("glucose.joblib")
 |---|---|
 | **Preprocessing** | SNV, MSC, Savitzky-Golay smoothing/derivatives, polynomial detrend, AsLS baseline, wavenumber region selection. All scikit-learn transformers, chainable from a short string like `"asls:1e5:0.01,snv"`. |
 | **Model building** | Single-response PLS with automatic LV selection from RMSECV (`parsimonious`, `min`, `first_min` rules). Preprocessing is re-fitted inside every CV fold, so there is no data leakage. |
-| **Validation** | Venetian blinds, contiguous blocks, leave-one-out and leave-one-batch-out CV; RMSE, R², bias, SEP and RPD. |
+| **Validation** | Venetian blinds, contiguous blocks, leave-one-out and leave-one-batch-out CV; RMSE, R², bias, SEP and RPD. Optional over-fitting guard: only LVs with RMSECV / RMSEC ≤ a limit (e.g. 1.2) are eligible. |
+| **Variable selection** | EPO (External Parameter Orthogonalisation) and forward interval PLS (iPLS). |
 | **Diagnostics** | Hotelling's T² and Q residuals with control limits, VIP scores, regression vector, LV scores. |
 | **Deployment** | Save/load with version metadata, wavenumber-axis check on new spectra, and a CLI (`specpls train`, `specpls predict`) for colleagues who don't write Python. |
 | **I/O** | Wide CSV files and MATLAB `.mat` files. |
@@ -61,6 +62,7 @@ pre-commit install
 ```bash
 python examples/01_quickstart.py            # fit, validate, plot and save a model
 python examples/02_compare_preprocessing.py # publication-style comparison table
+python examples/04_epo_overfitting_guard.py  # SNV + smoothing + EPO, RMSECV/RMSEC <= 1.2
 ```
 
 The examples use **simulated** Raman-like CHO culture data

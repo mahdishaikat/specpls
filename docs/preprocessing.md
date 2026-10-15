@@ -10,6 +10,7 @@ All preprocessing steps are scikit-learn transformers. Pass them to
 | `savgol` / `sg` | `SavitzkyGolay` | Smoothing or derivatives | window, polyorder, deriv |
 | `detrend` | `Detrend` | Subtract a polynomial baseline | order |
 | `asls` | `AsLSBaseline` | Asymmetric least-squares baseline, good for fluorescence | lam, p, n_iter |
+| `epo` | `EPO` | External Parameter Orthogonalisation: removes interference directions estimated from samples with similar `y` (or from given clutter spectra) | n_components |
 
 Steps are applied left to right:
 
@@ -48,3 +49,26 @@ Compare candidates on **RMSECV**, and keep the test set for a final check:
 ```bash
 python examples/02_compare_preprocessing.py
 ```
+
+## Interval PLS (iPLS)
+
+Forward iPLS splits the (preprocessed) spectrum into intervals and adds the
+interval that lowers RMSECV most, one at a time:
+
+```python
+from specpls import ipls, PLSModel, SNV, SavitzkyGolay, EPO, VariableSelector
+
+result = ipls(X, y, preprocessing="snv,savgol:21:2:0,epo:4",
+              n_intervals=20, max_intervals=4, cv=10, wavenumbers=axis)
+print(result.summary())
+
+model = PLSModel(
+    preprocessing=[SNV(), SavitzkyGolay(21, 2, 0), EPO(4), VariableSelector(result.mask)],
+    n_components=result.n_components,
+).fit(X, y, wavenumbers=axis)
+```
+
+!!! warning "Selection bias"
+    The RMSECV reported by iPLS is optimistic because the same
+    cross-validation picks the intervals. Always confirm on an independent
+    test set.
