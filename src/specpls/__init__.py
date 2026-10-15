@@ -10,14 +10,17 @@ from importlib.metadata import PackageNotFoundError, version
 from .io import SpectralData, load_csv, load_mat
 from .model import PLSModel, load_model
 from .preprocessing import (
+    EPO,
     MSC,
     SNV,
     AsLSBaseline,
     Detrend,
     RegionSelector,
     SavitzkyGolay,
+    VariableSelector,
     build_preprocessing,
 )
+from .selection import IPLSResult, ipls
 
 try:
     __version__ = version("specpls")
@@ -37,5 +40,9 @@ __all__ = [
     "Detrend",
     "AsLSBaseline",
     "RegionSelector",
+    "EPO",
+    "VariableSelector",
     "build_preprocessing",
+    "ipls",
+    "IPLSResult",
 ]
