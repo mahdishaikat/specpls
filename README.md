@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**PLS calibration models for process spectroscopy (Raman, NIR) in bioprocessing.**
+**PLS calibration models with time-gated Raman Spectroscopy in upstream bioprocessing.**
 
 `specpls` turns the usual chemometrics workflow (preprocess spectra, choose
 latent variables by cross-validation, check diagnostics, report RMSEC / RMSECV /
