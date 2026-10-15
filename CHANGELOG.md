@@ -6,6 +6,17 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-15
+
+### Added
+- `EPO` (External Parameter Orthogonalisation) preprocessing, y-gradient or
+  explicit clutter; string spec `"epo:k"`.
+- `VariableSelector` for column subsets after preprocessing.
+- Forward interval PLS: `specpls.ipls` / `IPLSResult` and `plot_ipls`.
+- Over-fitting guard `max_cv_ratio` (RMSECV / RMSEC limit) for LV selection
+  and iPLS; `cv_ratio` reported in model summaries.
+- Example `04_epo_overfitting_guard.py`.
+
 ## [0.1.0] - 2026-10-13
 
 ### Added

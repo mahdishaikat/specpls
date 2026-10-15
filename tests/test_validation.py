@@ -139,3 +139,24 @@ def test_select_rejects_bad_curve(bad):
 def test_select_unknown_rule():
     with pytest.raises(ValueError, match="Unknown rule"):
         select_n_components(CURVE, "magic")
+
+
+# ----------------------------------------------------------------- RMSECV/RMSEC guard
+def test_ratio_guard_excludes_overfitted_lvs():
+    rmsecv = [1.0, 0.6, 0.5, 0.45]
+    rmsec = [0.95, 0.55, 0.30, 0.20]  # ratios 1.05, 1.09, 1.67, 2.25
+    assert select_n_components(rmsecv, "min").n_components == 4
+    choice = select_n_components(rmsecv, "min", rmsec=rmsec, max_ratio=1.2)
+    assert choice.n_components == 2
+    assert choice.ratio_ok
+
+
+def test_ratio_guard_falls_back_to_smallest_ratio():
+    choice = select_n_components([1.0, 0.8], rmsec=[0.5, 0.5], max_ratio=1.2)
+    assert not choice.ratio_ok
+    assert choice.n_components == 2  # ratio 1.6 < 2.0
+
+
+def test_ratio_guard_needs_rmsec():
+    with pytest.raises(ValueError, match="rmsec"):
+        select_n_components([1.0, 0.8], max_ratio=1.2)

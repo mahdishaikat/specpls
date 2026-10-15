@@ -59,6 +59,10 @@ class PLSModel(RegressorMixin, BaseEstimator):
     scale : bool, default=False
         Autoscale variables inside PLS. Spectra are normally only
         mean-centred, so the default is ``False`` (unlike scikit-learn).
+    max_cv_ratio : float, optional
+        Over-fitting guard for automatic LV selection: only LVs with
+        ``RMSECV / RMSEC <= max_cv_ratio`` are eligible (1.2 = RMSECV at most
+        20 % above RMSEC). A warning is issued if no LV qualifies.
 
     Attributes
     ----------
@@ -66,6 +70,10 @@ class PLSModel(RegressorMixin, BaseEstimator):
         Number of LVs in the final model.
     rmsecv_curve_ : ndarray
         RMSECV for 1..max_components LVs (``None`` if LVs were fixed).
+    rmsec_curve_ : ndarray
+        RMSEC for the same LVs (``None`` if LVs were fixed).
+    ratio_ok_ : bool
+        False if ``max_cv_ratio`` was set and no LV satisfied it.
     cv_predictions_ : ndarray
         Cross-validated predictions for the training samples.
     pipeline_ : Pipeline
@@ -99,6 +107,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
         lv_tolerance=0.02,
         regions=None,
         scale=False,
+        max_cv_ratio=None,
     ):
         self.preprocessing = preprocessing
         self.n_components = n_components
@@ -108,6 +117,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
         self.lv_tolerance = lv_tolerance
         self.regions = regions
         self.scale = scale
+        self.max_cv_ratio = max_cv_ratio
 
     # ------------------------------------------------------------------
     # Fitting
@@ -187,9 +197,24 @@ class PLSModel(RegressorMixin, BaseEstimator):
             lv_list = list(range(1, max_lv + 1))
             cv_preds = self._cv_predict(folds, y, lv_list)
             curve = np.array([rmse(y, p) for p in cv_preds])
-            choice = select_n_components(curve, self.lv_rule, self.lv_tolerance)
+            cal_curve = self._calibration_curve(X, y, wavenumbers, lv_list)
+            choice = select_n_components(
+                curve,
+                self.lv_rule,
+                self.lv_tolerance,
+                rmsec=cal_curve,
+                max_ratio=self.max_cv_ratio,
+            )
+            if not choice.ratio_ok:
+                warnings.warn(
+                    f"No number of LVs gives RMSECV/RMSEC <= {self.max_cv_ratio}; "
+                    f"using {choice.n_components} LV (smallest ratio).",
+                    stacklevel=2,
+                )
             self.n_components_ = choice.n_components
             self.rmsecv_curve_ = curve
+            self.rmsec_curve_ = cal_curve
+            self.ratio_ok_ = choice.ratio_ok
             self.cv_predictions_ = cv_preds[self.n_components_ - 1]
         else:
             n = int(self.n_components)
@@ -197,6 +222,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
                 raise ValueError(f"n_components must be between 1 and {ceiling}; got {n}.")
             self.n_components_ = n
             self.rmsecv_curve_ = None
+            self.rmsec_curve_ = None
             self.cv_predictions_ = self._cv_predict(folds, y, [n])[0]
 
         self.pipeline_ = self._make_pipeline(self.n_components_, wavenumbers).fit(X, y)
@@ -205,13 +231,21 @@ class PLSModel(RegressorMixin, BaseEstimator):
         self.target_name_ = target_name
 
         fitted = self.predict(X)
+        rmsec_value = rmse(y, fitted)
+        rmsecv_value = rmse(y, self.cv_predictions_)
         self.calibration_ = {
-            "rmsec": rmse(y, fitted),
+            "rmsec": rmsec_value,
             "r2_cal": regression_metrics(y, fitted)["r2"],
-            "rmsecv": rmse(y, self.cv_predictions_),
+            "rmsecv": rmsecv_value,
             "r2_cv": regression_metrics(y, self.cv_predictions_)["r2"],
+            "cv_ratio": rmsecv_value / rmsec_value if rmsec_value > 0 else float("inf"),
             "n_samples": int(X.shape[0]),
         }
+        if self.n_components != "auto":
+            self.ratio_ok_ = (
+                self.max_cv_ratio is None
+                or self.calibration_["cv_ratio"] <= self.max_cv_ratio
+            )
 
         # Statistics needed for T2 / Q control limits.
         scores = self._scores_from_processed(self._processed(X))
@@ -245,6 +279,17 @@ class PLSModel(RegressorMixin, BaseEstimator):
                 "(e.g. venetian blinds, k-fold, leave-one-out or leave-one-batch-out)."
             )
         return folds
+
+    def _calibration_curve(self, X, y, wavenumbers, lv_list):
+        """RMSEC for each number of LVs (preprocessing fitted once on all data)."""
+        prep = self._make_pipeline(1, wavenumbers)[:-1]
+        Xp = prep.fit_transform(X, y) if len(prep) else X
+        return np.array(
+            [
+                rmse(y, PLSRegression(n_components=a, scale=self.scale).fit(Xp, y).predict(Xp))
+                for a in lv_list
+            ]
+        )
 
     def _cv_predict(self, folds, y, lv_list):
         """Cross-validated predictions, shape ``(len(lv_list), n_samples)``."""
@@ -404,9 +449,15 @@ class PLSModel(RegressorMixin, BaseEstimator):
     def model_wavenumbers_(self):
         """Wavenumbers that actually enter PLS (after region selection)."""
         check_is_fitted(self, "pipeline_")
-        if "regions" in self.pipeline_.named_steps:
-            return self.pipeline_.named_steps["regions"].selected_wavenumbers_
-        return self.wavenumbers_
+        steps = self.pipeline_.named_steps
+        axis = self.wavenumbers_
+        if "regions" in steps:
+            axis = steps["regions"].selected_wavenumbers_
+        if axis is not None and "preprocessing" in steps:
+            for _, step in steps["preprocessing"].steps:
+                if hasattr(step, "mask_") and step.mask_.shape[0] == axis.shape[0]:
+                    axis = axis[step.mask_]
+        return axis
 
     @property
     def coef_(self) -> np.ndarray:

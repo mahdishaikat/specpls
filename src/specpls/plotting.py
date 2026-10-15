@@ -15,6 +15,7 @@ __all__ = [
     "plot_vip",
     "plot_t2_q",
     "plot_overview",
+    "plot_ipls",
 ]
 
 
@@ -161,3 +162,49 @@ def plot_overview(model, X_cal, y_cal, X_test=None, y_test=None, units=""):
     fig.suptitle(f"{title}: {model.n_components_} LV", fontweight="bold")
     fig.tight_layout()
     return fig
+
+
+def plot_ipls(result, X=None, ax=None):
+    """Classic iPLS plot: RMSECV of each interval, selected intervals highlighted.
+
+    The dashed line is the all-variable model; the grey curve (if ``X`` is
+    given) is the mean spectrum for orientation.
+    """
+    ax = _axes(ax)
+    axis = result.wavenumbers
+    n_vars = result.mask.shape[0]
+    x = axis if axis is not None else np.arange(n_vars)
+    finite = np.isfinite(result.interval_rmsecv)
+    heights = np.where(finite, result.interval_rmsecv, 0.0)
+    for i, (lo, hi) in enumerate(result.intervals):
+        chosen = i in result.selected
+        if not finite[i]:
+            ax.text((x[lo] + x[hi]) / 2, 0, "x", ha="center", va="bottom", color="0.5")
+            continue
+        ax.bar(
+            (x[lo] + x[hi]) / 2,
+            heights[i],
+            width=(x[hi] - x[lo]) * 0.95,
+            color="C1" if chosen else "C0",
+            alpha=0.85 if chosen else 0.45,
+            edgecolor="none",
+        )
+        ax.text(
+            (x[lo] + x[hi]) / 2, heights[i], str(result.interval_lvs[i]),
+            ha="center", va="bottom", fontsize=7,
+        )
+    if np.isfinite(result.global_rmsecv):
+        ax.axhline(result.global_rmsecv, color="C3", ls="--", lw=1,
+                   label=f"all variables ({result.global_lvs} LV)")
+    if X is not None:
+        mean = np.asarray(X, dtype=float).mean(axis=0)
+        scaled = (mean - mean.min()) / (np.ptp(mean) or 1) * heights.max()
+        ax.plot(x, scaled, color="0.4", lw=0.8, label="mean spectrum (scaled)")
+    ax.set_xlabel("Raman shift (cm$^{-1}$)" if axis is not None else "Variable")
+    ax.set_ylabel("RMSECV (single interval)")
+    title = "iPLS: orange = selected; numbers = LVs"
+    if result.max_cv_ratio:
+        title += f"; x = fails RMSECV/RMSEC <= {result.max_cv_ratio}"
+    ax.set_title(title, fontsize=9)
+    ax.legend(frameon=False, fontsize=8)
+    return ax

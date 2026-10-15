@@ -172,14 +172,22 @@ def make_cv(cv=10, groups=None):
 # --------------------------------------------------------------------------
 @dataclass(frozen=True)
 class LVSelection:
-    """Result of latent-variable selection."""
+    """Result of latent-variable selection.
+
+    ``ratio_ok`` is False when a ``max_ratio`` was requested but no number of
+    LVs satisfied it; the LV count with the smallest RMSECV/RMSEC ratio is
+    returned in that case.
+    """
 
     n_components: int
     rule: str
     rmsecv: np.ndarray
+    ratio_ok: bool = True
 
 
-def select_n_components(rmsecv, rule="parsimonious", tolerance=0.02) -> LVSelection:
+def select_n_components(
+    rmsecv, rule="parsimonious", tolerance=0.02, rmsec=None, max_ratio=None
+) -> LVSelection:
     """Pick the number of latent variables from an RMSECV curve.
 
     Parameters
@@ -194,6 +202,12 @@ def select_n_components(rmsecv, rule="parsimonious", tolerance=0.02) -> LVSelect
           loss of accuracy for a simpler, more robust model.
     tolerance : float, default=0.02
         Relative tolerance for the parsimonious rule (0.02 = 2 %).
+    rmsec : array-like, optional
+        RMSEC for the same LVs. Required with ``max_ratio``.
+    max_ratio : float, optional
+        Over-fitting guard: only LVs with ``RMSECV / RMSEC <= max_ratio`` are
+        eligible (e.g. 1.2 means RMSECV may exceed RMSEC by at most 20 %).
+        The rule is then applied among the eligible LVs.
 
     Returns
     -------
@@ -202,19 +216,35 @@ def select_n_components(rmsecv, rule="parsimonious", tolerance=0.02) -> LVSelect
     curve = np.asarray(rmsecv, dtype=np.float64).ravel()
     if curve.size == 0 or not np.all(np.isfinite(curve)):
         raise ValueError("rmsecv must be a non-empty array of finite values.")
-    if rule == "min":
-        n = int(np.argmin(curve)) + 1
-    elif rule == "first_min":
-        n = curve.size
-        for i in range(curve.size - 1):
-            if curve[i + 1] >= curve[i]:
-                n = i + 1
-                break
-    elif rule == "parsimonious":
-        if tolerance < 0:
-            raise ValueError("tolerance must be >= 0.")
-        threshold = curve.min() * (1.0 + tolerance)
-        n = int(np.argmax(curve <= threshold)) + 1
-    else:
+    if rule not in {"min", "first_min", "parsimonious"}:
         raise ValueError(f"Unknown rule {rule!r}.")
+    if rule == "parsimonious" and tolerance < 0:
+        raise ValueError("tolerance must be >= 0.")
+
+    eligible = np.ones(curve.size, dtype=bool)
+    if max_ratio is not None:
+        if rmsec is None:
+            raise ValueError("max_ratio needs the rmsec curve.")
+        cal = np.asarray(rmsec, dtype=np.float64).ravel()
+        if cal.shape != curve.shape:
+            raise ValueError("rmsec and rmsecv must have the same length.")
+        ratio = curve / np.maximum(cal, np.finfo(float).tiny)
+        eligible = ratio <= max_ratio
+        if not eligible.any():
+            n = int(np.argmin(ratio)) + 1
+            return LVSelection(n_components=n, rule=rule, rmsecv=curve, ratio_ok=False)
+
+    masked = np.where(eligible, curve, np.inf)
+    if rule == "min":
+        n = int(np.argmin(masked)) + 1
+    elif rule == "first_min":
+        idx = np.flatnonzero(eligible)
+        n = int(idx[-1]) + 1
+        for i, j in zip(idx[:-1], idx[1:], strict=True):
+            if curve[j] >= curve[i]:
+                n = int(i) + 1
+                break
+    else:
+        threshold = masked.min() * (1.0 + tolerance)
+        n = int(np.argmax(masked <= threshold)) + 1
     return LVSelection(n_components=n, rule=rule, rmsecv=curve)

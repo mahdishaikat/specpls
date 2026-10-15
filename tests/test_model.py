@@ -256,3 +256,28 @@ def test_load_warns_on_sklearn_version_change(fitted, tmp_path):
         warnings.simplefilter("always")
         load_model(path)
     assert any("scikit-learn" in str(w.message) for w in caught)
+
+
+# ----------------------------------------------------------------- RMSECV/RMSEC guard
+def test_max_cv_ratio_limits_lvs(cal_test):
+    cal, _ = cal_test
+    y = cal.target("glucose")
+    free = PLSModel(max_components=10, cv=5, lv_rule="min").fit(cal.X, y)
+    guarded = PLSModel(max_components=10, cv=5, lv_rule="min", max_cv_ratio=1.2).fit(cal.X, y)
+    assert guarded.rmsec_curve_.shape == guarded.rmsecv_curve_.shape
+    if guarded.ratio_ok_:
+        assert guarded.calibration_["cv_ratio"] <= 1.2 + 1e-9
+    assert guarded.n_components_ <= free.n_components_
+
+
+def test_cv_ratio_reported(fitted):
+    ratio = fitted.calibration_["cv_ratio"]
+    assert ratio == pytest.approx(fitted.calibration_["rmsecv"] / fitted.calibration_["rmsec"])
+    assert "cv_ratio" in fitted.summary()
+
+
+def test_max_cv_ratio_warns_when_impossible(culture):
+    with pytest.warns(UserWarning, match="RMSECV/RMSEC"):
+        PLSModel(max_components=5, cv=5, max_cv_ratio=0.5).fit(
+            culture.X, culture.target("glucose")
+        )

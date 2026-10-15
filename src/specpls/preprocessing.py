@@ -27,6 +27,8 @@ __all__ = [
     "Detrend",
     "AsLSBaseline",
     "RegionSelector",
+    "EPO",
+    "VariableSelector",
     "build_preprocessing",
     "PREPROCESSORS",
 ]
@@ -268,6 +270,109 @@ class RegionSelector(_SpectralTransformer):
         return X[:, self.mask_]
 
 
+class EPO(_SpectralTransformer):
+    """External Parameter Orthogonalisation (Roger et al., 2003).
+
+    Estimates the directions of unwanted spectral variation ("clutter") and
+    projects every spectrum onto the space orthogonal to them:
+    ``X_epo = X (I - V V')``, where ``V`` holds the first ``n_components``
+    right singular vectors of the clutter matrix ``D``.
+
+    How ``D`` is built:
+
+    * ``clutter`` given: those spectra are used as ``D`` directly, e.g.
+      differences between the same sample measured at two temperatures or
+      in two vessels.
+    * otherwise (default, "y-gradient", as in PLS_Toolbox GLSW/EPO): the
+      calibration spectra are sorted by ``y`` and ``D`` contains differences
+      between neighbouring samples. Samples with nearly the same analyte
+      concentration should have nearly the same spectrum, so what differs
+      between them is interference (fluorescence, cell density, matrix).
+
+    ``y`` is required in ``fit`` for the y-gradient mode. Inside
+    :class:`~specpls.model.PLSModel` it is fitted on the training folds only.
+
+    Parameters
+    ----------
+    n_components : int, default=2
+        Number of clutter directions removed. Choose by RMSECV; too many
+        removes analyte signal.
+    clutter : array-like of shape (n_clutter, n_wavenumbers), optional
+        Explicit clutter (difference) spectra, already preprocessed the same
+        way as ``X``.
+    """
+
+    def __init__(self, n_components=2, clutter=None):
+        self.n_components = n_components
+        self.clutter = clutter
+
+    def fit(self, X, y=None):
+        X = self._check_fit_input(X)
+        if self.clutter is not None:
+            D = check_array(self.clutter, dtype=np.float64)
+            if D.shape[1] != X.shape[1]:
+                raise ValueError("clutter must have the same number of wavenumbers as X.")
+        else:
+            if y is None:
+                raise ValueError("EPO needs y (y-gradient mode) or an explicit clutter matrix.")
+            y = np.asarray(y, dtype=np.float64).ravel()
+            if y.shape[0] != X.shape[0]:
+                raise ValueError("y must have one value per spectrum.")
+            order = np.argsort(y, kind="stable")
+            D = np.diff(X[order], axis=0)
+        max_k = min(D.shape)
+        if not 0 <= self.n_components <= max_k:
+            raise ValueError(f"n_components must be between 0 and {max_k}.")
+        _, singular_values, vt = np.linalg.svd(D, full_matrices=False)
+        self.loadings_ = vt[: self.n_components].T  # (n_wavenumbers, k)
+        energy = singular_values**2
+        self.explained_clutter_ = energy[: self.n_components] / energy.sum()
+        return self
+
+    def transform(self, X):
+        X = self._check_transform_input(X)
+        V = self.loadings_
+        return X - (X @ V) @ V.T
+
+
+class VariableSelector(_SpectralTransformer):
+    """Keep a fixed subset of variables (e.g. intervals chosen by iPLS).
+
+    Unlike :class:`RegionSelector` it works on column positions, so it can be
+    placed *after* preprocessing.
+
+    Parameters
+    ----------
+    mask : array-like of bool or int
+        Boolean mask over the variables, or integer column indices.
+    """
+
+    def __init__(self, mask=None):
+        self.mask = mask
+
+    def fit(self, X, y=None):
+        X = self._check_fit_input(X)
+        if self.mask is None:
+            raise ValueError("VariableSelector needs a mask.")
+        mask = np.asarray(self.mask)
+        if mask.dtype == bool:
+            if mask.shape[0] != X.shape[1]:
+                raise ValueError(
+                    f"mask has {mask.shape[0]} entries but X has {X.shape[1]} columns."
+                )
+            self.mask_ = mask.copy()
+        else:
+            self.mask_ = np.zeros(X.shape[1], dtype=bool)
+            self.mask_[mask.astype(int)] = True
+        if not self.mask_.any():
+            raise ValueError("mask selects no variables.")
+        return self
+
+    def transform(self, X):
+        X = self._check_transform_input(X)
+        return X[:, self.mask_]
+
+
 def _as_regions(regions) -> list[tuple[float, float]]:
     regions = list(regions)
     if len(regions) == 2 and all(np.isscalar(v) for v in regions):
@@ -287,6 +392,7 @@ PREPROCESSORS = {
     "sg": (SavitzkyGolay, ("window_length", "polyorder", "deriv")),
     "detrend": (Detrend, ("order",)),
     "asls": (AsLSBaseline, ("lam", "p", "n_iter")),
+    "epo": (EPO, ("n_components",)),
 }
 """Short names accepted by :func:`build_preprocessing` and the CLI."""
 
