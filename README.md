@@ -1,6 +1,7 @@
 # specpls
 
 [![CI](https://github.com/mahdishaikat/specpls/actions/workflows/ci.yml/badge.svg)](https://github.com/mahdishaikat/specpls/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/mahdishaikat/specpls)](https://github.com/mahdishaikat/specpls/releases)
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -124,8 +125,10 @@ mkdocs serve                # preview documentation at http://127.0.0.1:8000
 ```
 
 Every push and pull request runs linting, the tests on Python 3.10–3.13
-(Linux and Windows) and a docs build on GitHub Actions. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for the branch, commit and code-review workflow.
+(Linux and Windows) and a docs build on GitHub Actions. Pushes to `main`
+publish the documentation to GitHub Pages, and pushing a version tag
+(`v0.2.1`) builds the package and publishes a GitHub Release. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the branch, commit, review and release workflow.
 
 ## Background
 

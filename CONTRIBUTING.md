@@ -81,4 +81,8 @@ once approved and green.
 ## 7. Release
 
 1. Update `CHANGELOG.md` and the version in `pyproject.toml`.
-2. Merge to `main`, then tag: `git tag v0.2.0 && git push --tags`.
+2. Merge to `main`, then tag and push the tag:
+   `git tag v0.2.1 && git push origin v0.2.1`.
+3. The **Release** workflow runs the tests, checks that the tag matches the
+   version, builds the wheel and source distribution and publishes a GitHub
+   Release with both attached.
