@@ -35,9 +35,9 @@ The full curve is in `model.rmsecv_curve_` and can be plotted with
 ## Figures of merit
 
 ```python
-model.calibration_          # rmsec, r2_cal, rmsecv, r2_cv
-model.evaluate(X_test, y_test)   # rmsep, r2, bias, sep, rpd, n
-model.summary(X_test, y_test)    # one row for a results table
+model.calibration_  # rmsec, r2_cal, rmsecv, r2_cv
+model.evaluate(X_test, y_test)  # rmsep, r2, bias, sep, rpd, n
+model.summary(X_test, y_test)  # one row for a results table
 ```
 
 - **RMSEC**: error on the calibration samples (always optimistic).

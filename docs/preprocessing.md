@@ -15,7 +15,7 @@ All preprocessing steps are scikit-learn transformers. Pass them to
 Steps are applied left to right:
 
 ```python
-PLSModel(preprocessing="savgol:15:2:1,snv")          # SG 1st derivative, then SNV
+PLSModel(preprocessing="savgol:15:2:1,snv")  # SG 1st derivative, then SNV
 PLSModel(preprocessing="asls:1e5:0.01,savgol:11:2:0")  # baseline, then smooth
 ```
 
@@ -23,6 +23,7 @@ or with objects:
 
 ```python
 from specpls import SNV, SavitzkyGolay
+
 PLSModel(preprocessing=[SavitzkyGolay(15, 2, 1), SNV()])
 ```
 
@@ -32,7 +33,7 @@ Use `regions` on the model rather than slicing arrays by hand, so the
 selection is stored with the model and applied automatically at prediction:
 
 ```python
-PLSModel(regions=[(400, 1800)])                 # fingerprint region
+PLSModel(regions=[(400, 1800)])  # fingerprint region
 PLSModel(regions=[(800, 1200), (1400, 1500)])  # several windows
 ```
 
@@ -58,8 +59,15 @@ interval that lowers RMSECV most, one at a time:
 ```python
 from specpls import ipls, PLSModel, SNV, SavitzkyGolay, EPO, VariableSelector
 
-result = ipls(X, y, preprocessing="snv,savgol:21:2:0,epo:4",
-              n_intervals=20, max_intervals=4, cv=10, wavenumbers=axis)
+result = ipls(
+    X,
+    y,
+    preprocessing="snv,savgol:21:2:0,epo:4",
+    n_intervals=20,
+    max_intervals=4,
+    cv=10,
+    wavenumbers=axis,
+)
 print(result.summary())
 
 model = PLSModel(

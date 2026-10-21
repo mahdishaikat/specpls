@@ -125,8 +125,9 @@ def test_ipls_history_improves_monotonically(one_good_interval):
 def test_ipls_with_preprocessing_and_axis(one_good_interval):
     X, y = one_good_interval
     axis = np.arange(1000.0, 1100.0)
-    result = ipls(X, y, preprocessing="savgol:5:2:0", n_intervals=10, max_intervals=1,
-                  cv=5, wavenumbers=axis)
+    result = ipls(
+        X, y, preprocessing="savgol:5:2:0", n_intervals=10, max_intervals=1, cv=5, wavenumbers=axis
+    )
     assert result.interval_ranges() == [(1040.0, 1049.0)]
     assert "Selected ranges" in result.summary()
 

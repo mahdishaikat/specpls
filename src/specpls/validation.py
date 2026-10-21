@@ -116,9 +116,7 @@ class VenetianBlinds(BaseCrossValidator):
     def _iter_test_indices(self, X=None, y=None, groups=None):
         n_samples = len(X)
         if self.n_splits > n_samples:
-            raise ValueError(
-                f"Cannot have n_splits={self.n_splits} > n_samples={n_samples}."
-            )
+            raise ValueError(f"Cannot have n_splits={self.n_splits} > n_samples={n_samples}.")
         indices = np.arange(n_samples)
         for fold in range(self.n_splits):
             yield indices[fold :: self.n_splits]

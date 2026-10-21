@@ -3,7 +3,7 @@
 ## VIP scores
 
 ```python
-vip = model.vip()                 # one value per wavenumber in the model
+vip = model.vip()  # one value per wavenumber in the model
 important = model.model_wavenumbers_[vip > 1]
 ```
 
@@ -17,9 +17,9 @@ than background.
 
 ```python
 flags = model.outliers(X_new, confidence=0.95)
-flags["t2"], flags["q"]                  # per-sample statistics
-flags["t2_limit"], flags["q_limit"]      # control limits
-flags["t2_flag"] | flags["q_flag"]       # samples to investigate
+flags["t2"], flags["q"]  # per-sample statistics
+flags["t2_limit"], flags["q_limit"]  # control limits
+flags["t2_flag"] | flags["q_flag"]  # samples to investigate
 ```
 
 - **T²**: distance from the model centre *within* the LV space. High T² means
@@ -37,5 +37,6 @@ Limits:
 
 ```python
 from specpls.plotting import plot_t2_q, plot_vip, plot_overview
+
 plot_t2_q(model, X_new, labels=sample_ids)
 ```

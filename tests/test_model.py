@@ -278,6 +278,4 @@ def test_cv_ratio_reported(fitted):
 
 def test_max_cv_ratio_warns_when_impossible(culture):
     with pytest.warns(UserWarning, match="RMSECV/RMSEC"):
-        PLSModel(max_components=5, cv=5, max_cv_ratio=0.5).fit(
-            culture.X, culture.target("glucose")
-        )
+        PLSModel(max_components=5, cv=5, max_cv_ratio=0.5).fit(culture.X, culture.target("glucose"))
