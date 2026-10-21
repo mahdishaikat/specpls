@@ -6,6 +6,20 @@ All notable changes are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-21
+
+### Added
+- Release workflow: pushing a `vX.Y.Z` tag runs the tests, checks the tag
+  against the package version, builds the wheel and source distribution and
+  publishes a GitHub Release with both attached.
+- Score and loading plots (`plot_scores`, `plot_loadings`); `plot_t2_q` can
+  show test samples alongside calibration samples.
+
+### Changed
+- Code formatted with ruff 0.16; `PLSModel._check_X` renamed `_check_input`.
+- Lint tooling pinned to the same ruff version in CI and pre-commit; GitHub
+  Actions updated to current major versions.
+
 ## [0.2.0] - 2026-10-15
 
 ### Added
