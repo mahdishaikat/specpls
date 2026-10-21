@@ -14,16 +14,21 @@ scikit-learn, so every piece works with the rest of the Python ML ecosystem.
 ```python
 from specpls import PLSModel, load_csv
 
-data = load_csv("calibration.csv")            # metadata + one column per wavenumber
+data = load_csv("calibration.csv")  # metadata + one column per wavenumber
 model = PLSModel(
-    preprocessing="savgol:15:2:1,snv",        # SG 1st derivative, then SNV
-    regions=[(400, 1800)],                    # fingerprint region
-    cv="batch",                               # leave-one-bioreactor-run-out
-).fit(data.X, data.target("glucose"),
-      wavenumbers=data.wavenumbers, groups=data.meta["batch"], target_name="glucose")
+    preprocessing="savgol:15:2:1,snv",  # SG 1st derivative, then SNV
+    regions=[(400, 1800)],  # fingerprint region
+    cv="batch",  # leave-one-bioreactor-run-out
+).fit(
+    data.X,
+    data.target("glucose"),
+    wavenumbers=data.wavenumbers,
+    groups=data.meta["batch"],
+    target_name="glucose",
+)
 
-model.summary()        # {'lvs': 5, 'rmsec': ..., 'rmsecv': ..., 'r2_cv': ...}
-model.vip()            # variable importance per wavenumber
+model.summary()  # {'lvs': 5, 'rmsec': ..., 'rmsecv': ..., 'r2_cv': ...}
+model.vip()  # variable importance per wavenumber
 model.outliers(X_new)  # Hotelling's T2 / Q residuals with 95 % limits
 model.save("glucose.joblib")
 ```

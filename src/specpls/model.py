@@ -176,8 +176,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
             wavenumbers = np.asarray(wavenumbers, dtype=np.float64).ravel()
             if wavenumbers.shape[0] != X.shape[1]:
                 raise ValueError(
-                    f"wavenumbers has {wavenumbers.shape[0]} values "
-                    f"but X has {X.shape[1]} columns."
+                    f"wavenumbers has {wavenumbers.shape[0]} values but X has {X.shape[1]} columns."
                 )
         if groups is not None:
             groups = np.asarray(groups)
@@ -243,8 +242,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
         }
         if self.n_components != "auto":
             self.ratio_ok_ = (
-                self.max_cv_ratio is None
-                or self.calibration_["cv_ratio"] <= self.max_cv_ratio
+                self.max_cv_ratio is None or self.calibration_["cv_ratio"] <= self.max_cv_ratio
             )
 
         # Statistics needed for T2 / Q control limits.
@@ -303,7 +301,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
     # ------------------------------------------------------------------
     # Prediction
     # ------------------------------------------------------------------
-    def _check_X(self, X, wavenumbers=None):
+    def _check_input(self, X, wavenumbers=None):
         check_is_fitted(self, "pipeline_")
         X = check_array(X, dtype=np.float64)
         if X.shape[1] != self.n_features_in_:
@@ -328,7 +326,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
         axis, which guards against applying a model to spectra from a
         different instrument set-up.
         """
-        X = self._check_X(X, wavenumbers)
+        X = self._check_input(X, wavenumbers)
         return self.pipeline_.predict(X).ravel()
 
     def evaluate(self, X, y, *, wavenumbers=None) -> dict[str, float]:
@@ -378,7 +376,7 @@ class PLSModel(RegressorMixin, BaseEstimator):
 
     def transform(self, X):
         """Preprocessed spectra (input to PLS) for inspection or plotting."""
-        return self._processed(self._check_X(X))
+        return self._processed(self._check_input(X))
 
     def scores(self, X) -> np.ndarray:
         """Latent-variable scores, shape ``(n_samples, n_components_)``."""

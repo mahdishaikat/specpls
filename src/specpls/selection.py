@@ -111,9 +111,9 @@ class IPLSResult:
                 f"  step {step['step']}: add interval {step['added']:>3} -> "
                 f"RMSECV {step['rmsecv']:.4g} ({step['lvs']} LV)"
             )
-        lines.append("Selected ranges: " + ", ".join(
-            f"{lo:g}-{hi:g}" for lo, hi in self.interval_ranges()
-        ))
+        lines.append(
+            "Selected ranges: " + ", ".join(f"{lo:g}-{hi:g}" for lo, hi in self.interval_ranges())
+        )
         return "\n".join(lines)
 
 

@@ -21,10 +21,11 @@ is treated as a wavenumber.
 
 ```python
 from specpls import load_csv
+
 data = load_csv("calibration.csv")
-data.X            # (n_samples, n_wavenumbers) array
+data.X  # (n_samples, n_wavenumbers) array
 data.wavenumbers  # (n_wavenumbers,) array
-data.meta         # pandas DataFrame with sample_id, batch, glucose, ...
+data.meta  # pandas DataFrame with sample_id, batch, glucose, ...
 ```
 
 Coming from MATLAB? Save with
@@ -36,7 +37,7 @@ Coming from MATLAB? Save with
 ```python
 from specpls import PLSModel
 
-is_test = (data.meta["batch"] == "R6").to_numpy()   # hold out a whole run
+is_test = (data.meta["batch"] == "R6").to_numpy()  # hold out a whole run
 cal, test = data.subset(~is_test), data.subset(is_test)
 
 model = PLSModel(
@@ -45,8 +46,13 @@ model = PLSModel(
     max_components=10,
     cv="batch",
 )
-model.fit(cal.X, cal.target("glucose"), wavenumbers=cal.wavenumbers,
-          groups=cal.meta["batch"], target_name="glucose")
+model.fit(
+    cal.X,
+    cal.target("glucose"),
+    wavenumbers=cal.wavenumbers,
+    groups=cal.meta["batch"],
+    target_name="glucose",
+)
 
 model.summary(test.X, test.target("glucose"))
 ```
@@ -55,8 +61,10 @@ model.summary(test.X, test.target("glucose"))
 
 ```python
 from specpls.plotting import plot_overview
-fig = plot_overview(model, cal.X, cal.target("glucose"),
-                    test.X, test.target("glucose"), units="g/L")
+
+fig = plot_overview(
+    model, cal.X, cal.target("glucose"), test.X, test.target("glucose"), units="g/L"
+)
 fig.savefig("glucose.png", dpi=150)
 ```
 
@@ -66,6 +74,7 @@ fig.savefig("glucose.png", dpi=150)
 model.save("glucose.joblib")
 
 from specpls import load_model
+
 model = load_model("glucose.joblib")
 model.predict(new_spectra, wavenumbers=new_axis)
 ```

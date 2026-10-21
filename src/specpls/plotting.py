@@ -28,9 +28,7 @@ def _plt():
     try:
         import matplotlib.pyplot as plt
     except ImportError as exc:  # pragma: no cover - depends on environment
-        raise ImportError(
-            'Plotting needs matplotlib: pip install "specpls[plot]"'
-        ) from exc
+        raise ImportError('Plotting needs matplotlib: pip install "specpls[plot]"') from exc
     return plt
 
 
@@ -155,13 +153,27 @@ def plot_t2_q(model, X, ax=None, confidence=0.95, labels=None, X_test=None, test
         sets.append((X_test, test_labels, TEST_STYLE))
     for data, names, style in sets:
         out = model.outliers(data, confidence)
-        ax.scatter(out["t2"], out["q"], s=36, alpha=0.85, color=style["color"],
-                   marker=style["marker"], label=style["label"], edgecolor="white", lw=0.6)
+        ax.scatter(
+            out["t2"],
+            out["q"],
+            s=36,
+            alpha=0.85,
+            color=style["color"],
+            marker=style["marker"],
+            label=style["label"],
+            edgecolor="white",
+            lw=0.6,
+        )
         flagged = out["t2_flag"] | out["q_flag"]
         if names is not None:
             for i in np.flatnonzero(flagged):
-                ax.annotate(str(names[i]), (out["t2"][i], out["q"][i]), fontsize=7,
-                            xytext=(3, 3), textcoords="offset points")
+                ax.annotate(
+                    str(names[i]),
+                    (out["t2"][i], out["q"][i]),
+                    fontsize=7,
+                    xytext=(3, 3),
+                    textcoords="offset points",
+                )
     ax.axvline(out["t2_limit"], color="0.35", ls="--", lw=1)
     ax.axhline(out["q_limit"], color="0.35", ls="--", lw=1)
     ax.set_xlabel(f"Hotelling's T² (dashed: {confidence:.0%} limit)")
@@ -184,26 +196,31 @@ def plot_scores(model, X, y=None, X_test=None, y_test=None, components=(1, 2), a
     pls = model.pls_
     x_var = np.var(model.transform(X), axis=0).sum()
     explained = [
-        np.var(np.outer(model._train_scores[:, a], pls.x_loadings_[:, a]), axis=0).sum()
-        / x_var
+        np.var(np.outer(model._train_scores[:, a], pls.x_loadings_[:, a]), axis=0).sum() / x_var
         for a in range(model.n_components_)
     ]
     if model.n_components_ >= 2:
         i, j = components[0] - 1, components[1] - 1
         ax.scatter(t_cal[:, i], t_cal[:, j], s=36, edgecolor="white", lw=0.6, **CAL_STYLE)
         if t_test is not None:
-            ax.scatter(t_test[:, i], t_test[:, j], s=40, edgecolor="white", lw=0.6,
-                       **TEST_STYLE)
+            ax.scatter(t_test[:, i], t_test[:, j], s=40, edgecolor="white", lw=0.6, **TEST_STYLE)
         ax.set_xlabel(f"LV{i + 1} scores ({explained[i]:.1%} of X variance)")
         ax.set_ylabel(f"LV{j + 1} scores ({explained[j]:.1%} of X variance)")
         ax.axvline(0, color="0.8", lw=0.8)
     else:
         n_cal = t_cal.shape[0]
-        ax.scatter(np.arange(1, n_cal + 1), t_cal[:, 0], s=36, edgecolor="white", lw=0.6,
-                   **CAL_STYLE)
+        ax.scatter(
+            np.arange(1, n_cal + 1), t_cal[:, 0], s=36, edgecolor="white", lw=0.6, **CAL_STYLE
+        )
         if t_test is not None:
-            ax.scatter(np.arange(n_cal + 1, n_cal + 1 + t_test.shape[0]), t_test[:, 0], s=40,
-                       edgecolor="white", lw=0.6, **TEST_STYLE)
+            ax.scatter(
+                np.arange(n_cal + 1, n_cal + 1 + t_test.shape[0]),
+                t_test[:, 0],
+                s=40,
+                edgecolor="white",
+                lw=0.6,
+                **TEST_STYLE,
+            )
         ax.set_xlabel("Sample")
         ax.set_ylabel(f"LV1 scores ({explained[0]:.1%} of X variance)")
     ax.axhline(0, color="0.8", lw=0.8)
@@ -219,8 +236,13 @@ def plot_loadings(model, components=None, ax=None):
     x = axis if axis is not None else np.arange(loadings.shape[0])
     comps = components or range(1, model.n_components_ + 1)
     for k, a in enumerate(comps):
-        ax.plot(x, loadings[:, a - 1], lw=1.2, color=["#2a78d6", "#eb6834", "#1baf7a",
-                                                       "#eda100"][k % 4], label=f"LV{a}")
+        ax.plot(
+            x,
+            loadings[:, a - 1],
+            lw=1.2,
+            color=["#2a78d6", "#eb6834", "#1baf7a", "#eda100"][k % 4],
+            label=f"LV{a}",
+        )
     ax.axhline(0, color="0.8", lw=0.8)
     ax.set_xlabel("Raman shift (cm$^{-1}$)" if axis is not None else "Variable")
     ax.set_ylabel("Loading")
@@ -272,12 +294,21 @@ def plot_ipls(result, X=None, ax=None):
             edgecolor="none",
         )
         ax.text(
-            (x[lo] + x[hi]) / 2, heights[i], str(result.interval_lvs[i]),
-            ha="center", va="bottom", fontsize=7,
+            (x[lo] + x[hi]) / 2,
+            heights[i],
+            str(result.interval_lvs[i]),
+            ha="center",
+            va="bottom",
+            fontsize=7,
         )
     if np.isfinite(result.global_rmsecv):
-        ax.axhline(result.global_rmsecv, color="C3", ls="--", lw=1,
-                   label=f"all variables ({result.global_lvs} LV)")
+        ax.axhline(
+            result.global_rmsecv,
+            color="C3",
+            ls="--",
+            lw=1,
+            label=f"all variables ({result.global_lvs} LV)",
+        )
     if X is not None:
         mean = np.asarray(X, dtype=float).mean(axis=0)
         scaled = (mean - mean.min()) / (np.ptp(mean) or 1) * heights.max()

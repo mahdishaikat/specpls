@@ -72,7 +72,6 @@ src = ["src"]
 select = ["E", "F", "W", "I", "B", "UP", "N", "NPY", "SIM"]
 ignore = [
     "N803", "N806",  # allow X, X_test etc. (standard in chemometrics)
-    "UP038",         # isinstance with tuples is fine
 ]
 
 [tool.ruff.lint.per-file-ignores]
